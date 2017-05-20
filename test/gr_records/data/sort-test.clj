@@ -68,3 +68,12 @@
              sort/by-birth-date
              (map :birth-date)
              ascending-dates?))))
+
+(defn descending-names? [names]
+  (every? (fn [[l r]] (not (neg? (compare l r)))) (partition 2 1 names)))
+
+(defspec by-last-name
+  (prop/for-all
+   [person-seq person-seq-gen]
+   (and (elements-preserved person-seq sort/by-last-name)
+        (->> person-seq sort/by-last-name (map :last-name) descending-names?))))

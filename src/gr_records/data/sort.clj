@@ -17,3 +17,10 @@
    (fn [{left-date :birth-date} {right-date :birth-date}]
      (* -1 (.compareTo left-date right-date)))
    ms))
+
+(defn by-last-name
+  [ms]
+  (sort
+   (fn [{left-name :last-name} {right-name :last-name}]
+     (compare right-name left-name))
+   ms))
