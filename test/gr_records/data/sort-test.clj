@@ -57,8 +57,14 @@
 
 (defn ascending-dates?
   [dates]
-  (every? (fn [l r] (not (.isBefore l r)))
+  (every? (fn [[l r]] (not (.isBefore l r)))
           (partition 2 1 dates)))
 
-#_
-(defspec by-birth-date)
+(defspec by-birth-date
+  (prop/for-all
+   [person-seq person-seq-gen]
+   (and (elements-preserved? person-seq sort/by-birth-date)
+        (->> person-seq
+             sort/by-birth-date
+             (map :birth-date)
+             ascending-dates?))))

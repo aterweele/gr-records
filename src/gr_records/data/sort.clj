@@ -10,3 +10,10 @@
          gender-comapare
          (compare left-name right-name))))
    ms))
+
+(defn by-birth-date
+  [ms]
+  (sort
+   (fn [{left-date :birth-date} {right-date :birth-date}]
+     (* -1 (.compareTo left-date right-date)))
+   ms))
