@@ -31,7 +31,7 @@
                                   [kerodon "0.8.0"]
                                   [org.clojure/test.check "0.9.0"]]
                    :source-paths   ["dev/src"]
-                   :resource-paths ["dev/resources"]
+                   :resource-paths ["dev/resources" "test-resources"]
                    :repl-options {:init-ns user}
                    :env {:port "3000"}}
    :project/test  {}})

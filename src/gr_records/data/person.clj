@@ -1,10 +1,10 @@
-(ns gr-records.data.person)
+(ns gr-records.data.person
+  (:import [java.time Instant]))
 
 (defrecord Person [last-name first-name gender favorite-color birth-date])
-;; TODO: make ->Person private?
 
-(defn person
+(defn seq->person
   "Create a person from the supplied array."
   [[last-name first-name gender favorite-color birth-date]]
-  ;; TODO: implement. Parse birth-date into an Instant.
-  )
+  (->Person last-name first-name gender favorite-color
+            (Instant/parse (str birth-date "T00:00:00.00Z"))))

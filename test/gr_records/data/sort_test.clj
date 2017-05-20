@@ -75,5 +75,5 @@
 (defspec by-last-name
   (prop/for-all
    [person-seq person-seq-gen]
-   (and (elements-preserved person-seq sort/by-last-name)
+   (and (elements-preserved? person-seq sort/by-last-name)
         (->> person-seq sort/by-last-name (map :last-name) descending-names?))))

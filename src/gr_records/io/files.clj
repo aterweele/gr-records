@@ -5,10 +5,10 @@
             [gr-records.data.person :as person]))
 
 (defn record-type
-  "Determine how data in the given filename is delimited according to
-  its extension."
-  [filename]
-  (case (-> filename (string/split #"\.") last)
+  "Determine how data in the given file is delimited according to its
+  extension."
+  [file]
+  (case (-> file .getFile (string/split #"\.") last)
     "csv" ::comma-separated
     "psv" ::pipe-separated
     "ssv" ::space-separated))
@@ -17,11 +17,11 @@
   "Parse the data file into a list of lists."
   record-type)
 (defmethod read-record-file ::comma-separated [filename]
-  (-> filename io/reader csv/read-csv))
+  (->> filename io/reader csv/read-csv (map (partial map string/trim))))
 (defmethod read-record-file ::pipe-separated [filename]
   (as-> filename x
     (io/reader x)
-    (csv/read-csv x {:separator \|})
+    (csv/read-csv x :separator \|)
     ;; TODO: this double map is a good opportunity to break out
     ;; specter
 
@@ -34,9 +34,9 @@
     (map #(map string/trim %) x)))
 (defmethod read-record-file ::space-separated [filename]
   ;; TODO: document assumption that multiple spaces do not happen
-  (-> filename io/reader (csv/read-csv {:separator \space})))
+  (-> filename io/reader (csv/read-csv :separator \space)))
 
 (defn parse-record-file
   "Read the file given by filename into a list of maps"
   [filename]
-  (-> filename read-record-file (map person/->Person)))
+  (->> filename read-record-file (map person/seq->person)))
