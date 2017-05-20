@@ -28,7 +28,8 @@
                                   [org.clojure/tools.nrepl "0.2.12"]
                                   [eftest "0.1.1"]
                                   [com.gearswithingears/shrubbery "0.4.1"]
-                                  [kerodon "0.8.0"]]
+                                  [kerodon "0.8.0"]
+                                  [org.clojure/test.check "0.9.0"]]
                    :source-paths   ["dev/src"]
                    :resource-paths ["dev/resources"]
                    :repl-options {:init-ns user}
