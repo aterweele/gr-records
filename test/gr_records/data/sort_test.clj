@@ -6,7 +6,7 @@
             [gr-records.data.sort :as sort])
   (:import [java.time Instant Duration]))
 
-(def gender-gen (gen/elements [:male :female]))
+(def gender-gen (gen/elements ["male" "female"]))
 
 (def date-gen (gen/fmap #(.plus Instant/EPOCH (Duration/ofDays %)) gen/nat))
 
