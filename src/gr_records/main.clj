@@ -9,7 +9,8 @@
               [duct.util.system :refer [load-system]]
               [environ.core :refer [env]]
               [gr-records.data.sort :as sort]
-              [gr-records.io.files :as files]))
+              [gr-records.io.files :as files]
+              [gr-records.io.printing :as printing]))
 
 (def cli-options
   [["-d" "--daemon" "run the web server"]
@@ -48,4 +49,5 @@
       ;; stacktrace
       :else (->> arguments
                  (parse-and-sort-files (:output options))
+                 printing/reformat-dates
                  print-table))))
