@@ -8,7 +8,7 @@
   "Determine how data in the given file is delimited according to its
   extension."
   [file]
-  (case (-> file .getFile (string/split #"\.") last)
+  (case (-> file .getName (string/split #"\.") last)
     "csv" ::comma-separated
     "psv" ::pipe-separated
     "ssv" ::space-separated))

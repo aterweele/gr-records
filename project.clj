@@ -10,8 +10,10 @@
                  [ring "1.5.0"]
                  [ring/ring-defaults "0.2.1"]
                  [ring-jetty-component "0.3.1"]
-                 ;; for parsing data
-                 [org.clojure/data.csv "0.1.3"]]
+                 ;; file parsing
+                 [org.clojure/data.csv "0.1.3"]
+                 ;; command-line argument parsing
+                 [org.clojure/tools.cli "0.3.5"]]
   :plugins [[lein-environ "1.0.3"]]
   :main ^:skip-aot gr-records.main
   :target-path "target/%s/"
