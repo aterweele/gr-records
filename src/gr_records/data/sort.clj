@@ -15,7 +15,7 @@
   [ms]
   (sort
    (fn [{left-date :birth-date} {right-date :birth-date}]
-     (.compareTo right-date left-date))
+     (.compareTo left-date right-date))
    ms))
 
 (defn by-last-name

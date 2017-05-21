@@ -57,7 +57,7 @@
 
 (defn ascending-dates?
   [dates]
-  (every? (fn [[l r]] (not (.isBefore l r)))
+  (every? (fn [[l r]] (not (pos? (compare l r))))
           (partition 2 1 dates)))
 
 (defspec by-birth-date
