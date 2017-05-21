@@ -25,7 +25,7 @@
 
 (defn parse-and-sort-files
   [output-type files]
-  (let [sort-fn (cond
+  (let [sort-fn (case output-type
                   1 sort/by-gender-last-name
                   2 sort/by-birth-date
                   3 sort/by-last-name)]
