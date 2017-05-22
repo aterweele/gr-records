@@ -14,7 +14,8 @@
                  [org.clojure/data.csv "0.1.3"]
                  ;; command-line argument parsing
                  [org.clojure/tools.cli "0.3.5"]]
-  :plugins [[lein-environ "1.0.3"]]
+  :plugins [[lein-environ "1.0.3"]
+            [lein-cloverage "1.0.9"]]
   :main ^:skip-aot gr-records.main
   :target-path "target/%s/"
   :aliases {"setup"  ["run" "-m" "duct.util.repl/setup"]}
