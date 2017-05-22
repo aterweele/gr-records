@@ -16,8 +16,11 @@
       last
       extension))
 
-;; TODO: implement
-(defn header-record-type [header] (throw (java.lang.RuntimeException.)))
+(defn header-record-type [header]
+  (-> header
+      (string/split #"/")
+      last
+      extension))
 
 (def separator
   ;; TODO: it might be possible to omit comma here so that read-csv
@@ -43,4 +46,5 @@
 
 (defn parse-rows
   ([file] (parse-from-source (file-record-type file) (io/reader file)))
-  ([header body] (parse-from-source (header-record-type header) body)))
+  ([header body]
+   (parse-from-source (header-record-type header) (io/reader body))))

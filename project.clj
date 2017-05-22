@@ -9,11 +9,16 @@
                  [environ "1.1.0"]
                  [ring "1.5.0"]
                  [ring/ring-defaults "0.2.1"]
+                 [ring/ring-json "0.4.0"]
                  [ring-jetty-component "0.3.1"]
+                 ;; TODO: this is not the latest version but to get
+                 ;; 0.9.0 I need to also upgrade ring.
+                 [metosin/ring-http-response "0.8.0"]
                  ;; file parsing
                  [org.clojure/data.csv "0.1.3"]
                  ;; command-line argument parsing
-                 [org.clojure/tools.cli "0.3.5"]]
+                 [org.clojure/tools.cli "0.3.5"]
+                 [org.clojure/data.json "0.2.6"]]
   :plugins [[lein-environ "1.0.3"]
             [lein-cloverage "1.0.9"]]
   :main ^:skip-aot gr-records.main

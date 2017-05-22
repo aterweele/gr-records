@@ -1,0 +1,31 @@
+{:components
+ {:app   #var duct.component.handler/handler-component
+  :http  #var ring.component.jetty/jetty-server
+  :store #var gr-records.component.in-memory-store/map->AtomStore}
+ :endpoints
+ {:records #var gr-records.endpoint.records/endpoint}
+ :dependencies
+ {:http    [:app]
+  :app     [:records]
+  :records [:store]}
+ :config
+ {:app
+  {:middleware
+   {:functions
+    {:hide-errors   #var duct.middleware.errors/wrap-hide-errors
+     :not-found     #var duct.middleware.not-found/wrap-not-found
+     :ring-defaults #var ring.middleware.defaults/wrap-defaults}
+    :applied
+    [:not-found :ring-defaults :hide-errors]
+    :arguments
+    {:not-found   "Resource Not Found"
+     :hide-errors "Internal Server Error"
+     :ring-defaults
+     {:params    {:urlencoded true
+                  :keywordize true}
+      :responses {:not-modified-responses true
+                  :absolute-redirects     true
+                  :content-types          true
+                  :default-charset        "utf-8"}}}}}
+  :http
+  {:port 3000}}}

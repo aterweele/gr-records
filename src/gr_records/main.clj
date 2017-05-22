@@ -36,14 +36,15 @@
                              (System/exit -1))
       (:help options)    (println summary)
 
-      ;; start the webserver
+      ;; Start the webserver if the daemon option is specified.
       (:daemon options)
-      (let [bindings {'http-port (Integer/parseInt (:port env "3000"))}
-            system   (->> (load-system [(io/resource "gr_records/system.edn")] bindings)
-                          (component/start))]
+      (let [system   (-> [(io/resource "gr_records/system.edn")]
+                         load-system
+                         component/start)]
         (add-shutdown-hook ::stop-system #(component/stop system))
         (println "Started HTTP server on port" (-> system :http :port)))
 
+      ;; Otherwise, handle the specified files.
       :else (let [files (map io/file arguments)]
               (if (every? #(.exists %) files)
                 (->> files
