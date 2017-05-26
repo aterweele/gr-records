@@ -1,6 +1,9 @@
 # `gr-records`
 
-Coding challenge for Guaranteed Rate.
+Coding challenge for Guaranteed Rate. Features generative
+property-based testing with `test.check` and integration tests. See
+`test/gr_records/data/sort_test.clj` and
+`test/gr_records/endpoint/records_test.clj`.
 
 ## Assumptions
 
@@ -33,7 +36,7 @@ one terminal:
 $ lein run -- -d
 ```
 
-Now you can use it from another:
+Now you can use it from another test:
 
 ``` shellsession
 $ curl --header "Content-Type:text/csv" --data-binary "@test-resources/gr_records/knvb.csv" -v http://localhost:3000/records
@@ -47,6 +50,9 @@ Check the test coverage:
 ``` shellsession
 $ lein cloverage
 ```
+
+This will both run the tests and show a coverage report. An HTML
+coverage report will be generate in `target/coverage/index.html`.
 
 Please note that cloverage applies coverage metrics to the `user` and
 `dev` namespaces, which are only used in development.
