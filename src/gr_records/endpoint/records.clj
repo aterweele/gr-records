@@ -1,6 +1,7 @@
 (ns gr-records.endpoint.records
   (:require [compojure.core :refer :all]
             [gr-records.boundary.record-store :as store]
+            [gr-records.io.printing :as output]
             [gr-records.io.reading :as reading]
             [ring.middleware.json :as middle-json]
             [ring.util.http-response :refer :all]))
@@ -13,10 +14,10 @@
      "/"
      {:keys [body] {content-type "content-type"} :headers}
      ;; TODO: reject requests with multiple rows?
-     (map (partial store/add-record store)
-          (reading/parse-rows content-type body))
+     (doseq [record (reading/parse-rows content-type body)]
+       (store/add-record store record))
      (ok))
-    (GET "/gender" _ (-> store store/by-gender ok))
-    (GET "/birthdate" _ (-> store store/by-birth-date ok))
-    (GET "/name" _ (-> store store/by-last-name ok)))
+    (GET "/gender" _ (-> store store/by-gender output/reformat-dates ok))
+    (GET "/birthdate" _ (-> store store/by-birth-date output/reformat-dates ok))
+    (GET "/name" _ (-> store store/by-last-name output/reformat-dates ok)))
    middle-json/wrap-json-response))

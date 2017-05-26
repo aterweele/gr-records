@@ -30,27 +30,33 @@
 (deftest endpoint
   (let [app (-> @system :records :routes)]
     (testing "Multiple post scenario"
-      (doseq [{:keys [delimiter person]}
+      (doseq [{:keys [delimiter header person]}
               ;; TODO: more of these
               [{:delimiter ", "
+                :header    "text/csv"
                 :person    {:first-name     "Rich"
                             :last-name      "Hickey"
+                            :gender         "male"
                             :favorite-color "blue"
                             :birth-date     "1975-01-02"}}
                {:delimiter " | "
+                :header    "text/psv"
                 :person    {:first-name     "Alex"
                             :last-name      "Miller"
+                            :gender         "male"
                             :favorite-color "green"
                             :birth-date     "1977-04-29"}}
                {:delimiter " "
+                :header    "text/ssv"
                 :person    {:first-name     "Stuart"
                             :last-name      "Sierra"
+                            :gender         "male"
                             :favorite-color "khaki"
                             :birth-date     "1980-11-14"}}]]
-        (let [response (-> (http-mock/request :post "/records")
-                           (http-mock/content-type "text/csv")
-                           (http-mock/body (delimit person delimiter))
-                           app)]
+        (let [request  (-> (http-mock/request :post "/records")
+                           (http-mock/content-type header)
+                           (http-mock/body (delimit person delimiter)))
+              response (app request)]
           (is (http-pred/ok? response))))
       ;; TODO: do each kind of get request, parse the result, assert
       ;; it is sorted.
@@ -58,9 +64,9 @@
               [{:endpoint "gender"
                 :sort     sort-test/gender-last-name-sorted?}
                {:endpoint "birthdate"
-                :sort     sort-test/ascending-dates?}
+                :sort     (comp sort-test/ascending-dates? :birth-date)}
                {:endpoint "name"
-                :sort     sort-test/descending-names?}]]
+                :sort     (comp sort-test/descending-names? :last-name)}]]
         (let [response (-> (http-mock/request :get
                                               (format "/records/%s" endpoint))
                            app)
