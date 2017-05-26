@@ -23,8 +23,6 @@
       extension))
 
 (def separator
-  ;; TODO: it might be possible to omit comma here so that read-csv
-  ;; does the default behavior.
   {::comma-separated \,
    ::pipe-separated  \|
    ::space-separated \space})

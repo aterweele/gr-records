@@ -31,7 +31,6 @@
   (let [app (-> @system :records :routes)]
     (testing "Multiple post scenario"
       (doseq [{:keys [delimiter header person]}
-              ;; TODO: more of these
               [{:delimiter ", "
                 :header    "text/csv"
                 :person    {:first-name     "Rich"
@@ -58,8 +57,6 @@
                            (http-mock/body (delimit person delimiter)))
               response (app request)]
           (is (http-pred/ok? response))))
-      ;; TODO: do each kind of get request, parse the result, assert
-      ;; it is sorted.
       (doseq [{:keys [endpoint] sorted? :sort}
               [{:endpoint "gender"
                 :sort     sort-test/gender-last-name-sorted?}
